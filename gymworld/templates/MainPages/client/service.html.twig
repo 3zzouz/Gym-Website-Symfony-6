@@ -1,0 +1,174 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    services
+{% endblock %}
+{% block content %}
+    {% include 'Fragments/breadcrumb.html.twig' with {'page_title':'services'} %}
+<!-- Services Section Begin -->
+<section class="services-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>What we do?</span>
+                    <h2>PUSH YOUR LIMITS FORWARD</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 order-lg-1 col-md-6 p-0">
+                <div class="ss-pic">
+                    <img src="{{ asset('assets/images/services/services-1.jpg')}}" alt="" />
+                </div>
+            </div>
+            <div class="col-lg-3 order-lg-2 col-md-6 p-0">
+                <div class="ss-text">
+                    <h4>Personal training</h4>
+                    <p>
+                        Achieve your fitness goals with personalized training. Our
+                        certified trainers create custom plans for your success. Start
+                        today!
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 order-lg-3 col-md-6 p-0">
+                <div class="ss-pic">
+                    <img src="{{ asset('assets/images/services/services-2.jpg')}}" alt="" />
+                </div>
+            </div>
+            <div class="col-lg-3 order-lg-4 col-md-6 p-0">
+                <div class="ss-text">
+                    <h4>Group fitness classes</h4>
+                    <p>
+                        Join our dynamic group fitness classes for a fun workout with
+                        others!
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-3 order-lg-8 col-md-6 p-0">
+                <div class="ss-pic">
+                    <img src="{{ asset('assets/images/services/services-4.jpg') }}" alt="" />
+                </div>
+            </div>
+            <div class="col-lg-3 order-lg-7 col-md-6 p-0">
+                <div class="ss-text second-row">
+                    <h4>Body building</h4>
+                    <p>Transform your physique with our bodybuilding program!</p>
+                </div>
+            </div>
+            <div class="col-lg-3 order-lg-6 col-md-6 p-0">
+                <div class="ss-pic">
+                    <img src="{{ asset('assets/images/services/services-3.jpg')}}" alt="" />
+                </div>
+            </div>
+            <div class="col-lg-3 order-lg-5 col-md-6 p-0">
+                <div class="ss-text second-row">
+                    <h4>Strength training</h4>
+                    <p>
+                        Build strength and redefine your limits with our strength
+                        training programs!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Services Section End -->
+
+<!-- Banner Section Begin -->
+<section class="banner-section set-bg" data-setbg="{{ asset ('assets/images//banner-bg.jpg')}}">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="bs-text service-banner">
+                    <h2>Exercise until the body obeys.</h2>
+                    <div class="bt-tips">Where health, beauty and fitness meet.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Banner Section End -->
+
+<!-- Pricing Section Begin -->
+<section class="pricing-section service-pricing spad">
+    <div class="container">
+        <!-- plan section -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <span>Our Plan</span>
+                    <h2>Choose your pricing plan</h2>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row justify-content-center">
+
+        {% for service in services %}
+            <div class="col-lg-4 col-md-8">
+                <div class="ps-item">
+                    <h3>
+                        {{service.name }}
+                    </h3>
+                    <div class="pi-price">
+                        <h2>TND
+                            {{ service.price }}
+                        </h2>
+                    </div>
+                    <ul>
+                        <li>Free riding</li>
+
+                        <li>Personal trainer</li>
+                        <li>Weight losing classes</li>
+                        <li>No time restriction</li>
+                        <li>Indoor cycling</li>
+                        <li>Cardio kickboxing</li>
+                    </ul>
+
+                    <form action="{{ path('app_pay') }}" method="post">
+                        <input type="hidden" name="offreDuration" value='{{ service.duration }}'>
+                        <input type="hidden" name="offreID" value='{{ service.id }}'>
+                        <input type="hidden" name="offre" value='{{ service.name }}'>
+                        <input type="hidden" name="price" value='{{ service.price }}'>
+                        <input class="btn btn-warning" type="submit" value="Enroll now" name="submit">
+                    </form>
+
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+    </div>
+</section>
+<!-- Pricing Section End -->
+{% endblock %}
+{% block stylesheets %}
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&display=swap" rel="stylesheet" />
+
+<!-- Css Styles -->
+<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css" />
+<link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css')}}" type="text/css" />
+<link rel="stylesheet" href="{{  asset('assets/css/flaticon.css')}}" type="text/css" />
+<link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css')}}" type="text/css" />
+<link rel="stylesheet" href="{{ asset('assets/css/barfiller.css')}}" type="text/css" />
+<link rel="stylesheet" href="{{  asset('assets/css/magnific-popup.css')}}" type="text/css" />
+<link rel="stylesheet" href="{{  asset('assets/css/slicknav.min.css')}}" type="text/css" />
+<link rel="stylesheet" href="{{  asset('assets/css/style.css')}}" type="text/css" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Js Plugins -->
+    <script src="{{  asset('assets/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{  asset('assets/js/bootstrap.min.js')}}"></script>
+    <script src="{{  asset('assets/js/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{  asset('assets/js/masonry.pkgd.min.js')}}"></script>
+    <script src="{{  asset('assets/js/jquery.barfiller.js')}}"></script>
+    <script src="{{  asset('assets/js/jquery.slicknav.js')}}"></script>
+    <script src="{{  asset('assets/js/owl.carousel.min.js')}}"></script>
+    <script src="{{  asset('assets/js/main.js')}}"></script>
+{% endblock %}

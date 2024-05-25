@@ -1,0 +1,17 @@
+<span
+        class="mb-2"
+> Abonnement :
+    {{ offre.Offre.name }} </span>
+<br>
+<span class="mb-2">
+    Date expiration :
+    {{ offre.DateFin | date('d-m-Y') }}
+</span>
+<br>
+<div class="progress" role="progressbar" aria-label="Animated striped example"
+     aria-valuenow="{{ d }}"
+     aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar progress-bar-striped progress-bar-animated"
+         style="width: {{ d }}%;background-color:orangered">
+    </div>
+</div>

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% include 'Fragments/preloader.html.twig' %}
+    {% include 'Fragments/offcanvas.html.twig' %}
+    {% include 'Fragments/header.html.twig' %}
+
+    {% block content %}
+        {# mettre ici le contenu de chaque page #}
+    {% endblock %}
+
+
+    {% include 'Fragments/footer.html.twig' %}
+{% endblock %}

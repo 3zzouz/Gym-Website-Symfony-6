@@ -1,0 +1,52 @@
+<!-- Header Section Begin -->
+<header class="header-section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="logo">
+                    <a href="{{ path('app_home') }}">
+                        <img src="{{ asset('assets/images/logo.png') }}" alt="log gym
+                        world"/>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <nav class="nav-menu">
+                    <ul>
+                        <li><a href="{{ path('app_home') }}">Home</a></li>
+                        {% set currentPage = app.request.get('_route') %}
+                        {% set pages = {
+                            'app_services': 'Services',
+                            'app_team': 'Team',
+                            'app_timetable': 'Timetable',
+                            'app_contact': 'Contact'
+                        } %}
+                        {% for route, label in pages %}
+                            <li class="{% if currentPage==route %}active{% endif %}"><a
+                                        href="{{ path(route) }}">{{ label }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
+            {% if app.user and 'ROLE_USER' in app.user.roles %}
+                <div class="button-container col-lg-4 mt-5 mx-auto mt-lg-0 ms-lg-0">
+                    <a href="{{ path('app_user_dashboard',{
+                        'id': app.user.id,
+                    }) }}"
+                       class="primary-btn">Profile </a>
+                    <a href="{{ path('app_user_accesscard',{
+                        'id': app.user.id,
+                    }) }}"
+                       class="primary-btn">Access
+                        Card </a>
+                    <a href="{{ path('app_logout') }}" class="primary-btn">sign out </a>
+                </div>
+            {% endif %}
+        </div>
+        <div class="canvas-open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Header End -->

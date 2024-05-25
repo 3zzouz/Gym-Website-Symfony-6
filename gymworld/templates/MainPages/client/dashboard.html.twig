@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+profile
+{% endblock %}
+{% block body %}
+    <h1>Welcome {{ user.name }}</h1>
+    {{ parent()}}
+    <div class="d-flex justify-content-center align-items-center " style="height: 95vh">
+
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_row(form.username) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.phone_number) }}
+        {{ form_row(form.submit,{ 'attr': {'class': 'primary_btn'} }) }}
+
+    </div>
+
+    <div class="offre">
+        <ul class="list-group">
+            {% for subscription in user.offreClients %}
+                {% if subscription.DateFin > date() %}
+                    <li class="list-group-item">
+                        {% set dateDebut = subscription.DateDebut %}
+                        {% set dateFin = subscription.DateFin %}
+                        {% set dureeTotale = dateDebut.diff(dateFin).days %}
+                        {% set dureeEcoulee = dateDebut.diff(dateActuelle).days %}
+                        {% set d = (dureeEcoulee / dureeTotale) * 100 %}
+                        {% include 'Fragments/progressbar.html.twig'
+                            with {
+                            'd': d,
+                            'offre': subscription
+                        } %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        </div>
+
+{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+    <style>
+        body{
+            margin: 100px;
+        }
+        .form-group{
+            width: 800px;
+            margin: 100px;
+
+        }
+        .btn {
+            margin-left: 390px;
+            margin-top: 20px;
+            background-color: orangered;
+            color: whitesmoke;
+            text-decoration: none;
+            height: 40px;
+            padding: 10px;
+        }
+        .offre{
+            width: 800px;
+            margin: 100px;
+        }
+        h1{
+
+            margin: 100px;
+            text-align: center;
+        }
+         input.form-control:focus {
+            border-color: orangered;
+            box-shadow: 0 0 5px orange;
+        }
+
+    </style>
+{% endblock %}

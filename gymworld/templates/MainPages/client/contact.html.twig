@@ -1,0 +1,87 @@
+{% extends 'layout.html.twig' %}
+{% block title %}
+    Contact Us
+{% endblock %}
+{% block content %}
+    {{ parent() }}
+    {% include 'Fragments/breadcrumb.html.twig' with {'page_title':'Contact Us'} %}
+    <!-- Contact Section Begin -->
+    <section class="contact-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="section-title contact-title">
+                        <span>Contact Us</span>
+                        <h2>GET IN TOUCH</h2>
+                    </div>
+                    <div class="contact-widget">
+                        <div class="cw-text">
+                            <i class="fa fa-map-marker"></i>
+                            <p>Centre Urbain Nord ,Tunisie <br/>index 1082</p>
+                        </div>
+                        <div class="cw-text">
+                            <i class="fa fa-mobile"></i>
+                            <ul>
+                                <li>28 435 459</li>
+                            </ul>
+                        </div>
+                        <div class="cw-text email">
+                            <i class="fa fa-envelope"></i>
+                            <p>gymworld135@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="leave-comment">
+                            {{ form_start(form) }}
+                            {{ form_row(form.from) }}
+                            {{ form_row(form.subject) }}
+                            {{ form_row(form.message) }}
+                            <button type="submit">Send Email</button>
+                            {{ form_end(form) }}
+                    </div>
+                </div>
+
+            </div>
+            <div class="map">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3193.914216989487!2d10.195020919250708!3d36.84296048004507!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12fd34c6d1e93bef%3A0x4153c4733f285343!2sINSAT%20Institut%20National%20des%20Sciences%20Appliqu%C3%A9es%20et%20de%20Technologie!5e0!3m2!1sen!2stn!4v1631312201931!5m2!1sen!2stn"
+                        width="600" height="450" style="border:0;" allowfullscreen=""
+                        loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section End -->
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Js Plugins -->
+    <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/js/masonry.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.barfiller.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.slicknav.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        label {
+            color: whitesmoke;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&display=swap"
+          rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/flaticon.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/barfiller.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/magnific-popup.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/slicknav.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+{% endblock %}

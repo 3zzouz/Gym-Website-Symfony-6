@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Forfaits
+{% endblock %}
+
+{% block body %}
+    <div class="list">
+        {{ parent() }}
+        <h2>Liste des forfaits</h2>
+
+        <table class="table table-dark">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Price</th>
+                <th scope="col">Delete</th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in offres %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.duration }}</td>
+                    <td>{{ row.price }}</td>
+                    <td><a href="{{ path('delete_service',{id: row.id}) }}"
+                           class="delete">
+                            delete </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="add">
+        <a href="{{ path('add_service') }}" class="primary-btn">Add</a>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap");
+
+
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: whitesmoke;
+            min-height: 100vh;
+        }
+        th, td {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border: 1px solid white;
+            border-spacing: 10px;
+            text-align: center;
+        }
+
+
+        .list {
+            margin-left: 100px;
+            margin-right: 100px;
+            margin-top: 100px;
+            margin-bottom: 50px;
+            height: 0%;
+
+        }
+
+        table {
+            border-spacing: 20px;
+            width: 150px;
+            border: 2px solid white;
+        }
+
+
+        .primary-btn {
+            margin-left: 730px;
+            margin-top: 20px;
+            background-color: orangered;
+            color: whitesmoke;
+            text-decoration: none;
+            height: 40px;
+            padding: 10px;
+            font-family: "Roboto", sans-serif;
+        }
+
+        .delete {
+            background-color: orangered;
+            color: whitesmoke;
+            font-family: "Roboto", sans-serif;
+            text-decoration: none;
+            padding: 10px;
+
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <section
+            class="bg-image"
+            style="
+                    background-image: url('{{ asset('assets/images/login/pexels-pixabay-260352.jpg') }}');
+                    background-size: cover;
+                    height: 120vh;
+                    "
+    >
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+                <div
+                        class="row d-flex justify-content-center align-items-center h-100"
+                >
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="card" style="border-radius: 15px">
+                            <div class="card-body py-3 px-md-5">
+                                <h2 class="text-uppercase text-center mb-3">
+                                    Create an account
+                                </h2>
+                                {% for flash_error in app.flashes('verify_email_error') %}
+                                    <div class="alert alert-danger"
+                                         role="alert">{{ flash_error }}</div>
+                                {% endfor %}
+                                {{ form_errors(registrationForm) }}
+                                {{ form_start(registrationForm) }}
+                                {{ form_row(registrationForm.name) }}
+                                {{ form_row(registrationForm.email) }}
+                                {{ form_row(registrationForm.username) }}
+                                {{ form_row(registrationForm.plainPassword) }}
+                                {{ form_row(registrationForm.agreeTerms) }}
+                                <div class="col d-flex justify-content-center">{{ form_row(registrationForm.Submit) }}</div>
+                                <p class="text-center"
+                                   style="margin-top: 1rem; margin-bottom: -5px">
+                                    Already have an Account?
+                                    <a style="text-decoration: none; color: orangered"
+                                       href="{{ path('app_login_user') }}">Sign In</a>
+                                </p>
+                                {{ form_rest(registrationForm) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+{% block stylesheets %}
+    <link
+            href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&display=swap"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ asset('assets/css/mdb.dark.min.css') }}"/>
+    {{ parent() }}
+    <style>
+        * {
+            font-family: "Oswald", sans-serif !important;
+        }
+
+        .form-check-input[type="checkbox"]:checked {
+            background-color: orangered;
+        }
+
+        .form-check-input[type="checkbox"]:checked:focus {
+            background-color: orangered;
+            box-shadow: 0 0 0 0.2rem rgba(255, 69, 0, 0.25); /* Adjust color as needed */
+        }
+
+        .form-control:focus {
+            border-color: orangered;
+            box-shadow: 0 0 0 0.2rem rgba(255, 69, 0, 0.25);
+        }
+
+        .btn {
+            background-color: orangered;
+            color: white;
+
+            &:hover {
+                background-color: orangered;
+                color: white;
+            }
+        }
+
+    </style>
+{% endblock %}
+{% block javascripts %}
+    <script>window.onload = function () {
+            var divs = document.querySelectorAll('.invalid-feedback.d-block');
+
+            for (var i = 0; i < divs.length; i++) {
+                divs[i].setAttribute('style', 'max-width: 90% !important;');
+                var content = divs[i].innerHTML;
+                divs[i].innerHTML = '<p>' + content + '</p>';
+            }
+            var divs = document.querySelectorAll('.mb-3');
+
+            for (var i = 1; i < divs.length; i++) {
+                var previousDiv = divs[i - 1];
+                var invalidFeedback = previousDiv.querySelector('.invalid-feedback.d-block');
+
+                if (invalidFeedback) {
+                    divs[i].setAttribute('style', 'padding-top: 2.5rem;');
+                }
+            }
+        };
+    </script>
+{% endblock %}

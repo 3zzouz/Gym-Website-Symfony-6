@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+     Horaires
+{% endblock %}
+{% block stylesheets %}
+    {{parent()}}
+    <style>
+        h1{
+            color: orangered;
+        }
+        #select,h1{
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            display: flex;
+            height: 100vh;
+        }
+        #form_submit{
+            background-color: orangered;
+            border-color: orangered;
+            box-shadow: 0 0 0 0.2rem rgba(255, 69, 0, 0.25);
+        }
+        .form-control:focus {
+            border-color: orangered;
+            box-shadow: 0 0 0 0.2rem rgba(255, 69, 0, 0.25);
+        }
+    </style>
+{% endblock %}
+{% block body  %}
+    <h1 >Horaires de notre Salle </h1>
+    <div id="select">
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

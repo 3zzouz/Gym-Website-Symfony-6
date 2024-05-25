@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Gestion d'un client
+{% endblock %}
+
+{% block body %}
+<div class="d-flex justify-content-center align-items-center " style="height: 95vh">
+    {{ form_start(form) }}
+    <div class="form-group">
+        {{ form_row(form.username) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.phone_number) }}
+        {{ form_row(form.submit, { 'attr': {'class': 'primary_btn'} }) }}
+    </div>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
+    <style>
+        body{
+            background-color: #0b0b0b;
+        }
+        .form-group{
+            width: 800px;
+            margin: 100px;
+            font-family: "Arial Black";
+        }
+        input.form-control:focus {
+            border-color: orangered;
+            box-shadow: 0 0 5px orange;
+        }
+        .btn {
+            margin-left: 5px;
+            margin-top: 20px;
+            background-color: orangered;
+            color: whitesmoke;
+            text-decoration: none;
+            height: 40px;
+            padding: 10px;
+            font-family: "Arial Black";
+        }
+    </style>
+{% endblock %}

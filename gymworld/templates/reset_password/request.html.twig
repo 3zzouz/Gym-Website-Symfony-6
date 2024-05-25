@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+{% block body %}
+
+    <section class="vh-100 bg-image" style="
+            background-image: url({{ asset('assets/images/body-1846668_1920.jpg') }});
+            background-size: cover;
+            ">
+        <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+            <div class="container h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                        <div class="card" style="border-radius: 15px">
+                            <div class="card-body p-5">
+                                <h2 class="text-uppercase text-center mb-3">Reset
+                                    Password</h2>
+                                {% for flash_error in app.flashes('reset_password_error') %}
+                                    <div class="alert alert-danger"
+                                         role="alert">{{ flash_error }}</div>
+                                {% endfor %}
+                                {{ form_start(requestForm) }}
+                                {{ form_row(requestForm.email) }}
+                                <div>
+                                    <small>
+                                        Enter your email address, and we will send you
+                                        a
+                                        link to reset your password.
+                                    </small>
+                                </div>
+                                <div class="col d-flex justify-content-center mt-5">
+                                    <button class="btn" type="submit">
+                                        Send password reset email
+                                    </button>
+                                </div>
+                                {{ form_end(requestForm) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:300,
+    400,500,600,700&display=swap">
+    <link rel="stylesheet" href="{{ asset('assets/css/mdb.dark.min.css') }}">
+    {{ parent() }}
+    <style>
+        * {
+            font-family: "Oswald", sans-serif !important;
+        }
+
+        [type="checkbox"] {
+            accent-color: orangered;
+        }
+
+        .form-control:focus {
+            border-color: orangered;
+            box-shadow: 0 0 0 0.2rem rgba(255, 69, 0, 0.25);
+        }
+
+        .btn {
+            background-color: orangered;
+            color: white;
+
+            &:hover {
+                background-color: orangered;
+                color: white;
+            }
+        }
+
+        a {
+            color: orangered !important;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}

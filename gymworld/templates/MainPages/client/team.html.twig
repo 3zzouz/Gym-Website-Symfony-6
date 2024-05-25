@@ -1,0 +1,114 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Team{% endblock %}
+
+{% block content %}
+    {% include 'Fragments/breadcrumb.html.twig' with {'page_title':'Team'} %}
+    <!-- Team Section Begin -->
+    <section class="team-section team-page spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="team-title">
+                        <div class="section-title">
+                            <span>Our Team</span>
+                            <h2>TRAIN WITH EXPERTS</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6">
+                    <div class="ts-item set-bg" data-setbg="{{ asset('assets/images/team/team-1.jpg')}}">
+                        <div class="ts_text">
+                            <h4>Refka Mahjoub</h4>
+                            <span>Gym Trainer</span>
+                            <p>RefkaMahjoub@gmail.com</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="ts-item set-bg" data-setbg="{{ asset('assets/images/team/team-2.jpg')}}">
+                        <div class="ts_text">
+                            <h4>Oussama Grami</h4>
+                            <span>Gym Trainer</span>
+                            <p>OussamaGrami@gmail.com</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="ts-item set-bg" data-setbg="{{ asset('assets/images/team/team-3.jpg')}}">
+                        <div class="ts_text">
+                            <h4>Aziz Dhouibi</h4>
+                            <span>Gym Trainer</span>
+                            <p>AzizDhouibi@gmail.com</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="ts-item set-bg" data-setbg="{{ asset('assets/images/team/team-4.jpg')}}">
+                        <div class="ts_text">
+                            <h4>Youcef Afli</h4>
+                            <span>Gym Trainer</span>
+                            <p>YoucefAfli@gmail.com</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="ts-item set-bg" data-setbg="{{ asset('assets/images/team/team-5.jpg')}}">
+                        <div class="ts_text">
+                            <h4>Maram benrhouma</h4>
+                            <span>Gym Trainer</span>
+                            <p>Marambenrhouma@gmail.com</p>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6">
+                    <div class="ts-item set-bg" data-setbg="{{ asset('assets/images/team/team-6.jpg')}}">
+                        <div class="ts_text">
+                            <h4>Lina Saoud</h4>
+                            <span>Gym Trainer</span>
+                            <p>LinaSaoud@gmail.com</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Team Section End -->
+    {% block stylesheets %}
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&display=swap" rel="stylesheet" />
+
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css')}}" type="text/css" />
+        <link rel="stylesheet" href="{{  asset('assets/css/flaticon.css')}}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css')}}" type="text/css" />
+        <link rel="stylesheet" href="{{ asset('assets/css/barfiller.css')}}" type="text/css" />
+        <link rel="stylesheet" href="{{  asset('assets/css/magnific-popup.css')}}" type="text/css" />
+        <link rel="stylesheet" href="{{  asset('assets/css/slicknav.min.css')}}" type="text/css" />
+        <link rel="stylesheet" href="{{  asset('assets/css/style.css')}}" type="text/css" />
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        <!-- Js Plugins -->
+        <script src="{{  asset('assets/js/jquery-3.3.1.min.js')}}"></script>
+        <script src="{{  asset('assets/js/bootstrap.min.js')}}"></script>
+        <script src="{{  asset('assets/js/jquery.magnific-popup.min.js')}}"></script>
+        <script src="{{  asset('assets/js/masonry.pkgd.min.js')}}"></script>
+        <script src="{{  asset('assets/js/jquery.barfiller.js')}}"></script>
+        <script src="{{  asset('assets/js/jquery.slicknav.js')}}"></script>
+        <script src="{{  asset('assets/js/owl.carousel.min.js')}}"></script>
+        <script src="{{  asset('assets/js/main.js')}}"></script>
+    {% endblock %}
+{% endblock %}
