@@ -164,6 +164,55 @@
                 </div>
             </div>
         </div>
+        <button id="add">Add Row</button>
     </section>
 {% endblock %}
 
+{% block javascripts %}
+    <script>
+        var table = document.querySelector('table');
+
+        table.addEventListener('click', function (e) {
+            var t = e.target.closest('td');
+
+            if (!t) return;
+            if (t.classList.contains('class-time')) {
+                t.setAttribute('contenteditable', true);
+                t.focus();
+            } else {
+                // If the td is empty, add a h5 and span element
+                if (t.textContent.trim() === '' && t.children.length === 0) {
+                    var h5 = document.createElement('h5');
+                    var span = document.createElement('span');
+                    t.classList.remove('blank-td');
+                    t.classList.add('hover-bg', 'ts-meta');
+                    h5.innerHTML = '&nbsp;';
+                    span.innerHTML = '&nbsp;';
+                    t.appendChild(h5);
+                    t.appendChild(span);
+                }
+                // If the clicked element is a h5 or span, make it editable
+                if (e.target.tagName === 'H5' || e.target.tagName === 'SPAN') {
+                    e.target.setAttribute('contenteditable', true);
+                    e.target.focus();
+
+                    e.target.addEventListener('blur', function () {
+                        e.target.removeAttribute('contenteditable');
+                        // Here you can add code to save the changes to your server
+                        if (e.target.textContent.trim() === '') {
+                            e.target.innerHTML = '&nbsp;';
+                        }
+                    });
+                }
+            }
+        });
+        document.querySelector("#add").addEventListener("click", function () {
+            var row = table.insertRow();
+            for (var i = 0; i < 8; i++) {
+                var cell = row.insertCell(i);
+                if (i === 0) cell.classList.add('class-time');
+                else cell.classList.add('blank-td');
+            }
+        });
+    </script>
+{% endblock %}
