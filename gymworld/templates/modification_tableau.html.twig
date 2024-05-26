@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="class-timetable">
-                        <table>
+                        <table id="myTable">
                             <thead>
                             <tr>
                                 <th></th>
@@ -170,49 +170,66 @@
 
 {% block javascripts %}
     <script>
-        var table = document.querySelector('table');
+        // Function to add a row
+        function addRow() {
+            var table = document.getElementById('myTable');
+            var row = table.insertRow(-1);
 
-        table.addEventListener('click', function (e) {
-            var t = e.target.closest('td');
-
-            if (!t) return;
-            if (t.classList.contains('class-time')) {
-                t.setAttribute('contenteditable', true);
-                t.focus();
-            } else {
-                // If the td is empty, add a h5 and span element
-                if (t.textContent.trim() === '' && t.children.length === 0) {
-                    var h5 = document.createElement('h5');
-                    var span = document.createElement('span');
-                    t.classList.remove('blank-td');
-                    t.classList.add('hover-bg', 'ts-meta');
-                    h5.innerHTML = '&nbsp;';
-                    span.innerHTML = '&nbsp;';
-                    t.appendChild(h5);
-                    t.appendChild(span);
-                }
-                // If the clicked element is a h5 or span, make it editable
-                if (e.target.tagName === 'H5' || e.target.tagName === 'SPAN') {
-                    e.target.setAttribute('contenteditable', true);
-                    e.target.focus();
-
-                    e.target.addEventListener('blur', function () {
-                        e.target.removeAttribute('contenteditable');
-                        // Here you can add code to save the changes to your server
-                        if (e.target.textContent.trim() === '') {
-                            e.target.innerHTML = '&nbsp;';
-                        }
-                    });
-                }
-            }
-        });
-        document.querySelector("#add").addEventListener("click", function () {
-            var row = table.insertRow();
-            for (var i = 0; i < 8; i++) {
+            // Add cells to the row
+            for (var i = 0; i < table.rows[0].cells.length; i++) {
                 var cell = row.insertCell(i);
-                if (i === 0) cell.classList.add('class-time');
-                else cell.classList.add('blank-td');
+                cell.innerHTML = '&nbsp;'; // Add a non-breaking space
             }
-        });
+
+            // Add a cell with a delete button
+            var deleteCell = row.insertCell(-1);
+            deleteCell.innerHTML = '<button class="delete">Delete</button>';
+        }
+
+        // Function to delete a row
+        function deleteRow() {
+            var table = document.getElementById('myTable');
+            if (table.rows.length > 1) { // Don't delete the row if it's the only one
+                table.deleteRow(-1);
+            }
+        }
+
+        // Function to handle cell click
+        function cellClick(e) {
+            var cell = e.target;
+
+            // If the delete button was clicked, delete the row
+            if (cell.classList.contains('delete')) {
+                var row = cell.parentNode;
+                row.parentNode.removeChild(row);
+                return;
+            }
+
+            // If the cell has the blank-td class, add h5 and span elements
+            if (cell.classList.contains('blank-td') && cell.innerHTML.trim() === '&nbsp;') {
+                cell.innerHTML = '<h5>&nbsp;</h5><span>&nbsp;</span>';
+            }
+
+            // If the cell has a h5 or span element, make it editable
+            if (cell.querySelector('h5, span')) {
+                var element = cell.querySelector('h5, span');
+                element.setAttribute('contenteditable', true);
+                element.focus();
+
+                element.addEventListener('blur', function () {
+                    element.removeAttribute('contenteditable');
+
+                    // If the content is empty after editing, add a non-breaking space
+                    if (element.textContent.trim() === '') {
+                        element.innerHTML = '&nbsp;';
+                    }
+
+                    // Here you can add code to save the changes to your server
+                });
+            }
+        }
+
+        // Add the cellClick function as a click event listener to the table
+        document.getElementById('myTable').addEventListener('click', cellClick);
     </script>
 {% endblock %}
