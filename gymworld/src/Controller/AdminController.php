@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Activite;
 use App\Entity\Offres;
 use App\Entity\User;
+use App\Form\ActiviteType;
 use App\Form\UserType;
 use App\Form\OffreType;
 
+use App\Repository\ActiviteRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -48,30 +51,28 @@ class AdminController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('app_login_admin');
         }
-        $defaultData = ['message' => 'Type your message here'];
-        $form = $this->createFormBuilder($defaultData)
-            ->add('emploi1', FileType::class)
-            ->add('emploi2', FileType::class)
-            ->add('emploi3', FileType::class)
-            ->add('emploi4', FileType::class)
-            ->add('submit', SubmitType::class)
-            ->getForm();
+        return $this->render('MainPages/admin/consulterhoraire.html.twig');
+    }
+
+    #[Route('/dashboard/activite/{id<\d{1,2}>?0}', name: 'consulteractivite')]
+    public function activite(Activite        $activite = null, Request $request,
+                             ManagerRegistry $repository): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login_admin');
+        }
+        if ($activite == null) {
+            $activite = new Activite();
+        }
+        $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $emplois = $form->getData();
-            // data is an array with "name", "email", and "message" keys
-            $i = 1;
-            foreach ($emplois as $emploi) {
-                if ($emploi instanceof UploadedFile) {
-                    $file_name = "emploi" . $i . ".png";
-                    $emploi->move("../public/uploads", $file_name);
-                    $i++;
-                }
-            }
-            echo "<script>alert('Timetables added successfully')</script>";
+            $repository->getManager()->persist($activite);
+            $repository->getManager()->flush();
+            return $this->redirectToRoute('consulterhoraire');
         }
-
-        return $this->render('MainPages/admin/consulterhoraire.html.twig', ['form' => $form->createView()]);
+        return $this->render('MainPages/admin/changerActivite.html.twig', ['form' =>
+            $form->createView()]);
     }
 
     #[Route('/dashboard/clients', name: 'app_admin_dashboard_client')]
@@ -164,7 +165,7 @@ class AdminController extends AbstractController
     #[Route('/dashboard/client/{id?0}/edit', name: 'app_admin_dashboard_client_id_edit')]
     public function admin_dashboard_client_id_edit($id, User $client = null): Response
     {
-        return $this->redirectToRoute('app_admin_dashboard_edit', ['user' => $client,'id'=>$id]);
+        return $this->redirectToRoute('app_admin_dashboard_edit', ['user' => $client, 'id' => $id]);
     }
 
     #[Route('/dashboard/client/{id}/delete', name: 'app_admin_dashboard_client_id_delete')]

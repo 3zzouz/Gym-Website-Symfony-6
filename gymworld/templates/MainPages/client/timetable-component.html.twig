@@ -1,0 +1,77 @@
+<section class="class-timetable-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="section-title">
+                    <span>Find Your Time</span>
+                    <h2>Find Your Time</h2>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="table-controls">
+                    <ul>
+                        <li class="active" data-tsfilter="all">All event</li>
+                        <li data-tsfilter="fitness">Fitness tips</li>
+                        <li data-tsfilter="motivation">Motivation</li>
+                        <li data-tsfilter="workout">Workout</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="class-timetable">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>Monday</th>
+                            <th>Tuesday</th>
+                            <th>Wednesday</th>
+                            <th>Thursday</th>
+                            <th>Friday</th>
+                            <th>Saturday</th>
+                            <th>Sunday</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for tmp in temps %}
+                            {% set tps = tmp.heureDebut %}
+                            {% set bigIndex = loop.index %}
+                            <tr>
+                                <td class="class-time">{{ tps }}h -
+                                    {{ tps+2 }}h
+                                </td>
+                                {% set k=0 %}
+                                {% for i in 0..6 %}
+                                    {% if k < activites[tps] | length %}
+                                        {% set act = activites[tps][k] %}
+                                        {% set verif = loop.index+bigIndex %}
+                                        {% if i == act.jour-1 %}
+                                            <td class="{% if verif is even %}dark-bg{% endif %} hover-bg ts-meta"
+                                                data-tsmeta="{{ act.type | lower }}"
+                                                data-id="{{ act.id }}"
+                                            >
+                                                <h5>{{ act.nom }}</h5>
+                                                <span>{{ act.coach }}</span>
+                                            </td>
+                                            {% set k= k+1 %}
+                                        {% else %}
+                                            <td class="{% if verif is even %}dark-bg{% endif %} blank-td"
+                                                data-id="0"
+                                            ></td>
+                                        {% endif %}
+                                    {% else %}
+                                        <td data-id="0"
+                                            class="{% if verif is even %}dark-bg{% endif %} blank-td"></td>
+                                    {% endif %}
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

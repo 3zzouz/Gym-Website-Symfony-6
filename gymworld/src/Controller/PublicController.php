@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Offres;
 use App\Form\MailerFormType;
+use App\Repository\ActiviteRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,17 +61,27 @@ class PublicController extends AbstractController
         ]);
     }
 
-    #[Route('/timetable/{num<\d+>?1}', name: 'app_timetable')]
-    public function timetable($num, Request $request): Response
+    #[Route('/timetable', name: 'app_timetable')]
+    public function timetable(): Response
     {
-
-        $response = $this->render('MainPages/client/timetable.html.twig', [
-            'num' => $num
-        ]);
-        $response->headers->set('Cache-Control', 'max-age=1, must-revalidate');
-        $response->headers->set('Pragma', 'no-cache'); // Pour HTTP 1.0
-        $response->headers->set('Expires', '0'); // Pour les proxies
+        $response = $this->render('MainPages/client/timetable.html.twig');
         return $response;
+    }
+
+    #[Route('/time-table', name: 'app_time_table')]
+    public function timeComponentTable(Request $request, ActiviteRepository
+    $repository): Response
+    {
+        $temps = $repository->findTemps();
+        $activites = [];
+        foreach ($temps as $temp) {
+            $activites[$temp['heureDebut']] = $repository->findByTemps
+            ($temp['heureDebut']);
+        }
+        return $this->render('MainPages/client/timetable-component.html.twig', [
+            'temps' => $temps,
+            'activites' => $activites
+        ]);
     }
 
 }

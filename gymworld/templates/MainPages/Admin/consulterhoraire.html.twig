@@ -1,36 +1,62 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-     Horaires
+    Horaires
+{% endblock %}
+{% block body %}
+    {{ render(controller('App\\Controller\\PublicController::timeComponentTable')) }}
 {% endblock %}
 {% block stylesheets %}
-    {{parent()}}
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,500,600,700&display=swap"
+          rel="stylesheet"/>
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}"
+          type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}"
+          type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/flaticon.css') }}"
+          type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}"
+          type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/barfiller.css') }}"
+          type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}"
+          type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/slicknav.min.css') }}"
+          type="text/css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"
+          type="text/css"/>
     <style>
-        h1{
-            color: orangered;
-        }
-        #select,h1{
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            display: flex;
-            height: 100vh;
-        }
-        #form_submit{
-            background-color: orangered;
-            border-color: orangered;
-            box-shadow: 0 0 0 0.2rem rgba(255, 69, 0, 0.25);
-        }
-        .form-control:focus {
-            border-color: orangered;
-            box-shadow: 0 0 0 0.2rem rgba(255, 69, 0, 0.25);
+        a {
+            color: white;
+
+            &.active {
+                color: orangered;
+            }
         }
     </style>
 {% endblock %}
-{% block body  %}
-    <h1 >Horaires de notre Salle </h1>
-    <div id="select">
-        {{ form_start(form) }}
-        {{ form_end(form) }}
-    </div>
-
+{% block javascripts %}
+    <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ asset('assets/js/masonry.pkgd.min.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.barfiller.js') }}"></script>
+    <script src="{{ asset('assets/js/jquery.slicknav.js') }}"></script>
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script>
+        var tds = document.querySelectorAll('td');
+        tds.forEach(td => {
+            if (!td.classList.contains('class-time')) {
+                td.addEventListener('click', function () {
+                    var id = td.getAttribute('data-id');
+                    window.location.href = '/admin/dashboard/activite/' + id;
+                });
+            }
+        });
+    </script>
 {% endblock %}
