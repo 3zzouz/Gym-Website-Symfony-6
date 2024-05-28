@@ -15,8 +15,7 @@ class TestController extends AbstractController
     #[Route(path: '/test', name: 'test')]
     public function test(ActiviteRepository $repository,Request $request): Response
     {
-        dd($request->getRequestUri());
-        return $this->render('test/index.html.twig');
+        return $this->render('public/pdf.html.twig');
     }
     #[IsGranted('ROLE_ADMIN')]
     #[Route(path:'test/admin', name:'test_admin')]

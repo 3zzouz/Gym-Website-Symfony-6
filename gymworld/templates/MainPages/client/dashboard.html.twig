@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-profile
+Profile {{ user.name }}
 {% endblock %}
 {% block body %}
     <h1>Welcome {{ user.name }}</h1>
@@ -15,7 +15,6 @@ profile
         {{ form_row(form.email) }}
         {{ form_row(form.phone_number) }}
         {{ form_row(form.submit,{ 'attr': {'class': 'primary_btn'} }) }}
-
     </div>
 
     <div class="offre">

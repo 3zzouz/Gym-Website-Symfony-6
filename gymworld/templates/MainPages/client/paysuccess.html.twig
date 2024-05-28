@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success</title>
-    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
+{% extends 'base.html.twig' %}
+{% block title %}Success{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
     <style>
         body {
             text-align: center;
@@ -13,13 +9,15 @@
             align-items: center;
         }
     </style>
-</head>
-
-<body>
-<h1>TRANSACTION SUCCEEDED</h1>
-<h1>Thank you for payment... </h1>
-
-<a class="btn btn-warning" href="{{ path('app_services') }}">Retour</a>
-</body>
-
-</html>
+{% endblock %}
+{% block body %}
+    <div class="d-flex justify-content-center align-items-center"
+         style="height: 90vh;"
+    >
+        <div>
+            <h1>TRANSACTION SUCCEEDED</h1>
+            <h1>Thank you for payment... </h1>
+            <a class="btn btn-warning" href="{{ path('app_services') }}">Retour</a>
+        </div>
+    </div>
+{% endblock %}

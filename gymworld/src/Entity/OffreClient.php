@@ -47,7 +47,7 @@ class OffreClient
     #[ORM\PrePersist]
     public function ajoutDatesAuto(): static
     {
-        $this->setDateDebut(new \DateTime());
+        if ($this->getDateDebut() == null) $this->setDateDebut(new \DateTime());
         return $this;
     }
 
@@ -92,5 +92,10 @@ class OffreClient
         $this->client = $client;
 
         return $this;
+    }
+
+    public function getDates(): string
+    {
+        return $this->date_debut->format('d/m/Y') . ' - ' . $this->date_fin->format('d/m/Y');
     }
 }
