@@ -9,7 +9,7 @@ The Gym Management Website is designed to streamline the operations of a fitness
 - Login
 - Manage members (add, remove, update)
 - Manage offers (add, remove)
-- Upload plannings
+- Manage plannings (add , delete , remove)
 - Sign out
 
 ### Client Interface
