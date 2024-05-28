@@ -18,22 +18,7 @@
 </head>
 <body>
 {% block body %}
-    {% for succ in app.flashes('success') %}
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <div>{{ succ }}</div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                    aria-label="Close"></button>
-        </div>
-    {% endfor %}
-    {% for error in app.flashes('error') %}
-        <div class="alert alert-danger alert-dismissible" role="alert">
-            <div>{{ error }}</div>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                    aria-label="Close"></button>
-        </div>
-    {% endfor %}
-
-
+    {{include('public/errors-success.html.twig') }}
 {% endblock %}
 {% block javascripts %}
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

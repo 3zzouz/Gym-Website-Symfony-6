@@ -42,6 +42,31 @@ class ActiviteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return int Returns an array of Activite objects
+     */
+    public function findAllByTemps(): array
+    {
+        $results = $this->createQueryBuilder('a')
+            ->select('a.heureDebut', 'a.jour', 'a.id')
+            ->innerJoin('a.coach', 'c')
+            ->addSelect('c.nom as coach')
+            ->innerJoin('a.nom', 'n')
+            ->addSelect('n.nom as nom')
+            ->innerJoin('a.type', 't')
+            ->addSelect('t.nom as type')
+            ->orderBy('a.heureDebut', 'ASC')
+            ->addOrderBy('a.jour', 'ASC')
+            ->getQuery()
+            ->getResult();
+        $grouped = [];
+        foreach ($results as $result) {
+            $grouped[$result['heureDebut']][] = $result;
+        }
+        return $grouped;
+    }
+
+
 
     //    public function findOneBySomeField($value): ?Activite
     //    {

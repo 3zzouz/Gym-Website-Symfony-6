@@ -36,12 +36,13 @@ class AdminController extends AbstractController
         return $this->render('MainPages/admin/consulterforfait.html.twig', ['offres' => $offres]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/', name: 'app_admin')]
     public function admin(): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        /*if (!$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('app_login_admin');
-        }
+        }*/
         return $this->render('MainPages/Admin/index.html.twig');
     }
 
@@ -56,23 +57,47 @@ class AdminController extends AbstractController
 
     #[Route('/dashboard/activite/{id<\d{1,2}>?0}', name: 'consulteractivite')]
     public function activite(Activite        $activite = null, Request $request,
-                             ManagerRegistry $repository): Response
+                             ManagerRegistry $repository, $id): Response
     {
         if (!$this->isGranted('ROLE_ADMIN')) {
             return $this->redirectToRoute('app_login_admin');
         }
+        $msg = 'updated';
         if ($activite == null) {
+            $msg = 'added';
             $activite = new Activite();
+            $jour = $request->query->get('jour');
+            if ($jour != null) $activite->setJour($jour);
+            $heure = $request->query->get('heure');
+            if ($heure != null) $activite->setHeureDebut($heure);
         }
         $form = $this->createForm(ActiviteType::class, $activite);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $repository->getManager()->persist($activite);
             $repository->getManager()->flush();
+            $this->addFlash('success', 'Activite ' . $msg . ' successfully');
             return $this->redirectToRoute('consulterhoraire');
         }
         return $this->render('MainPages/admin/changerActivite.html.twig', ['form' =>
-            $form->createView()]);
+            $form->createView(),
+            'id' => $id]);
+    }
+
+    #[Route('/dashboard/activite/{id<\d{1,2}>?0}/delete', name: 'delete_activite')]
+    public function deleteActivite(Activite $activite = null, EntityManagerInterface $repository): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('app_login_admin');
+        }
+        if ($activite == null) {
+            $this->addFlash('error', 'Activite not found');
+        } else {
+            $repository->remove($activite);
+            $repository->flush();
+            $this->addFlash('success', 'Activite deleted successfully');
+        }
+        return $this->redirectToRoute('consulterhoraire');
     }
 
     #[Route('/dashboard/clients', name: 'app_admin_dashboard_client')]

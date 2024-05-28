@@ -4,5 +4,9 @@
         {{ form_errors(form) }}
         {{ form_start(form) }}
         {{ form_end(form) }}
+        <button class="btn btn-danger">
+            <a class="text-decoration-none text-white"
+               href="{{ path('delete_activite',{'id':id}) }}">Delete Activity</a>
+        </button>
     </div>
 {% endblock %}

@@ -69,15 +69,10 @@ class PublicController extends AbstractController
     }
 
     #[Route('/time-table', name: 'app_time_table')]
-    public function timeComponentTable(Request $request, ActiviteRepository
-    $repository): Response
+    public function timeComponentTable(Request $request, ActiviteRepository $repository): Response
     {
         $temps = $repository->findTemps();
-        $activites = [];
-        foreach ($temps as $temp) {
-            $activites[$temp['heureDebut']] = $repository->findByTemps
-            ($temp['heureDebut']);
-        }
+        $activites = $repository->findAllByTemps();
         return $this->render('MainPages/client/timetable-component.html.twig', [
             'temps' => $temps,
             'activites' => $activites

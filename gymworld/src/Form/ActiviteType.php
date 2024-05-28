@@ -10,13 +10,16 @@ use Doctrine\Common\Collections\Expr\Value;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 
 class ActiviteType extends AbstractType
@@ -28,15 +31,16 @@ class ActiviteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('jour', options: [
-                'constraints' => [
-                    new Length([
-                        'min' => 1,
-                        'max' => 7,
-                        'minMessage' => 'The day must be between 1 and 7',
-                        'maxMessage' => 'The day must be between 1 and 7',
-                    ]),
-                ]
+            ->add('jour', ChoiceType::class, options: [
+                'choices' => [
+                    'Monday' => 1,
+                    'Tuesday' => 2,
+                    'Wednesday' => 3,
+                    'Thursday' => 4,
+                    'Friday' => 5,
+                    'Saturday' => 6,
+                    'Sunday' => 7,
+                ],
             ])
             ->add('heureDebut', options: [
                 'constraints' => [
@@ -45,6 +49,15 @@ class ActiviteType extends AbstractType
                         'max' => 23,
                         'minMessage' => 'The hour must be between 0 and 23',
                         'maxMessage' => 'The hour must be between 0 and 23',
+                    ]),
+                    new Callback([
+                        'callback' => function ($value, ExecutionContextInterface $context) {
+                            if ($value % 2 != 0) {
+                                $context->buildViolation('The hour must be an even number.')
+                                    ->atPath('heureDebut')
+                                    ->addViolation();
+                            }
+                        },
                     ]),
                 ]
             ])
@@ -68,8 +81,7 @@ class ActiviteType extends AbstractType
             $existingActivite = $this->entityManager
                 ->getRepository(Activite::class)
                 ->findOneBy(['jour' => $activite->getJour(), 'heureDebut' => $activite->getHeureDebut()]);
-
-            if ($existingActivite) {
+            if ($existingActivite && $existingActivite->getId() !== $activite->getId()) {
                 $form->addError(new FormError('An activity already exists for this day and start time.'));
             }
         });

@@ -20,7 +20,8 @@ class AdminAuthAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    public const LOGIN_ROUTE = 'app_login_admin';
+    public const LOGIN_USER_ROUTE = 'app_login_user';
+    public const LOGIN_ADMIN_ROUTE = 'app_login_admin';
 
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
@@ -28,6 +29,8 @@ class AdminAuthAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
+        dd("requested authenticate function");
+        $usernameParam = $request->getRequestUri();
         $username = $request->getPayload()->getString('username');
 
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $username);
@@ -55,6 +58,7 @@ class AdminAuthAuthenticator extends AbstractLoginFormAuthenticator
 
     protected function getLoginUrl(Request $request): string
     {
+        dd("requested get login function");
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
 }

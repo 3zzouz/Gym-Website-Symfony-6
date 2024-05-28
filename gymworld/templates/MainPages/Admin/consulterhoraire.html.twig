@@ -3,9 +3,21 @@
     Horaires
 {% endblock %}
 {% block body %}
-    {{ render(controller('App\\Controller\\PublicController::timeComponentTable')) }}
+    <div style="background-color: #151515">
+        {{ render(controller('App\\Controller\\PublicController::timeComponentTable')) }}
+        <button class="btn btn-info"
+                style="position:relative;bottom: 8vh;left: 20vw"
+        >
+            <a class="text-decoration-none text-white"
+               href="{{ path('consulteractivite') }}">Ajout
+                Activite</a>
+        </button>
+    </div>
+
+
 {% endblock %}
 {% block stylesheets %}
+    {{ parent() }}
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
           rel="stylesheet"/>
@@ -37,9 +49,11 @@
                 color: orangered;
             }
         }
+
     </style>
 {% endblock %}
 {% block javascripts %}
+    {{ parent() }}
     <script src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
@@ -54,7 +68,9 @@
             if (!td.classList.contains('class-time')) {
                 td.addEventListener('click', function () {
                     var id = td.getAttribute('data-id');
-                    window.location.href = '/admin/dashboard/activite/' + id;
+                    window.location.href = '/admin/dashboard/activite/' +
+                        id + '?jour=' + td.getAttribute('data-jour') + '&heure=' + td
+                            .getAttribute('data-debut');
                 });
             }
         });
