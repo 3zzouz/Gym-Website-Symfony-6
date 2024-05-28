@@ -14,7 +14,7 @@ The Gym Management Website is designed to streamline the operations of a fitness
 
 ### Client Interface
 
-- Explore the website: services, coaches, schedules
+- Explore the website: services, coaches, schedules and contact us section
 - Create an account (sign up)
 - Login
 - Enroll in an offer and pay it
