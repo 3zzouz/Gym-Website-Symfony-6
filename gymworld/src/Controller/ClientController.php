@@ -7,7 +7,6 @@ use App\Entity\Offres;
 use App\Entity\User;
 use App\Form\UserType;
 use App\services\PdfService;
-use App\services\RedirectIfNotUserService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,10 +17,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+#[IsGranted('ROLE_USER')]
 class ClientController extends AbstractController
 {
-    public function __construct(private PdfService $pdfService, private
-    RedirectIfNotUserService                       $redirectIfNotUserService)
+    public function __construct(private PdfService $pdfService)
     {
     }
 
@@ -29,16 +28,12 @@ class ClientController extends AbstractController
     #[Route('/success', name: 'success')]
     public function success(): Response
     {
-        $res = $this->redirectIfNotUserService->redirectIfNotUser($this->isGranted('ROLE_USER'));
-        if ($res != null) return $res;
         return $this->render('MainPages/client/paysuccess.html.twig');
     }
 
     #[Route(path: '/payment', name: 'app_pay')]
     public function pay(Request $request, EntityManagerInterface $manager): Response
     {
-        $res = $this->redirectIfNotUserService->redirectIfNotUser($this->isGranted('ROLE_USER'));
-        if ($res != null) return $res;
         $offreID = $request->request->get('offreID');
         $offrename = $request->request->get('offre');
         $offreDuration = $request->request->get('offreDuration');
@@ -90,8 +85,6 @@ class ClientController extends AbstractController
     #[Route(path: '/error', name: 'error')]
     public function error(): Response
     {
-        $res = $this->redirectIfNotUserService->redirectIfNotUser($this->isGranted('ROLE_USER'));
-        if ($res != null) return $res;
         return $this->render('MainPages/client/error.html.twig');
     }
 
@@ -99,9 +92,6 @@ class ClientController extends AbstractController
     public function dashboard(User                                  $user = null, $id, EntityManagerInterface $manager,
                               \Doctrine\Persistence\ManagerRegistry $doctrine, Request $request): Response
     {
-
-        $res = $this->redirectIfNotUserService->redirectIfNotUser($this->isGranted('ROLE_USER'));
-        if ($res != null) return $res;
         if ($id != $this->getUser()->getId()) {
             return $this->redirectToRoute('app_home');
         }
@@ -125,8 +115,6 @@ class ClientController extends AbstractController
     public function accessCard(PdfService $pdfService, $id, User $personne = null,):
     Response
     {
-        $res = $this->redirectIfNotUserService->redirectIfNotUser($this->isGranted('ROLE_USER'));
-        if ($res != null) return $res;
         if ($id != $this->getUser()->getId()) {
             return $this->redirectToRoute('app_home');
         }

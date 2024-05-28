@@ -17,7 +17,6 @@ security:
             provider: app_user_provider
             entry_point: App\Security\AdminAuthAuthenticator
             custom_authenticator:
-                - App\Security\UserAuthAuthenticator
                 - App\Security\AdminAuthAuthenticator
             logout:
                 path: app_logout

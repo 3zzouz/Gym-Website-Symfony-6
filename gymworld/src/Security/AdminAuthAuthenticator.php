@@ -29,9 +29,8 @@ class AdminAuthAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        dd("requested authenticate function");
-        $usernameParam = $request->getRequestUri();
-        $username = $request->getPayload()->getString('username');
+        $usernameParam = strpos($request->getRequestUri(), 'admin') ? 'username' : 'email';
+        $username = $request->getPayload()->getString($usernameParam);
 
         $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $username);
 
@@ -50,15 +49,18 @@ class AdminAuthAuthenticator extends AbstractLoginFormAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
-
-        // For example:
-        return new RedirectResponse($this->urlGenerator->generate('app_admin'));
+        //if the user is admin redirect to admin page
+        if (in_array('ROLE_ADMIN', $token->getRoleNames())) {
+            return new RedirectResponse($this->urlGenerator->generate('app_admin'));
+        } //if the user is user redirect to user page
+        else {
+            return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        }
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 
     protected function getLoginUrl(Request $request): string
     {
-        dd("requested get login function");
-        return $this->urlGenerator->generate(self::LOGIN_ROUTE);
+        return $this->urlGenerator->generate(strpos($request->getRequestUri(), 'admin') ? self::LOGIN_ADMIN_ROUTE : self::LOGIN_USER_ROUTE);
     }
 }
