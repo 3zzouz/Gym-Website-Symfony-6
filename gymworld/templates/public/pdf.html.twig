@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-    Access Card - {#{{ personne.name }}#}
+    Access Card - {{ personne.name }}
 {% endblock %}
 {% block stylesheets %}
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@300&display=swap"
@@ -55,11 +55,11 @@
         <div class="card">
             <div class="card-content">
                 <h2>Access Card</h2>
-{#                <p>Id : <span> {{ personne.id }}</span></p>
+                <p>Id : <span> {{ personne.id }}</span></p>
                 <p>Name : <span>{{ personne.name }}</span></p>
                 <p>Phone : <span>{{ personne.phoneNumber }}</span></p>
                 <p>Email : <span>{{ personne.email }}</span></p>
-                <p>Offre : <span>{{ offre[0].dateFin | date('Y/m/d') }}</span> </p>#}
+                <p>Offre : <span>{{ offre[0].dateFin | date('Y/m/d') }}</span></p>
             </div>
         </div>
     </main>

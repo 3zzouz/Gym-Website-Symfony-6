@@ -8,15 +8,11 @@ use App\Entity\User;
 use App\Form\ActiviteType;
 use App\Form\UserType;
 use App\Form\OffreType;
-
-use App\Repository\ActiviteRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -41,7 +37,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/dashboard/horaire', name: 'consulterhoraire')]
-    public function horaire(Request $request): Response
+    public function horaire(): Response
     {
         return $this->render('MainPages/admin/consulterhoraire.html.twig');
     }
@@ -108,14 +104,13 @@ class AdminController extends AbstractController
     }
 
     #[Route('/dashboard/add', name: 'app_admin_dashboard_add')]
-    public function admin_dashboard_add(ManagerRegistry $doctrine, \Symfony\Component\HttpFoundation\Request $request): Response
+    public function admin_dashboard_add(Request $request): Response
     {
         return $this->forward('App\Controller\AdminController::admin_dashboard_edit', ['request' => $request]);
     }
 
-
     #[Route('/dashboard/edit/{id?0}', name: 'app_admin_dashboard_edit')]
-    public function admin_dashboard_edit(User $user = null, ManagerRegistry $doctrine, \Symfony\Component\HttpFoundation\Request $request): Response
+    public function admin_dashboard_edit(User $user = null, ManagerRegistry $doctrine, Request $request): Response
     {
         $new = false;
         if (
@@ -153,7 +148,7 @@ class AdminController extends AbstractController
         $this->addFlash('success', 'Client avec l\'id ' . $id . ' found successfully');
         return $this->render('MainPages/Admin/detail_client.html.twig', [
             'client' => $client,
-            'dateActuelle' => new \DateTime()
+            'dateActuelle' => new DateTime()
         ]);
     }
 
@@ -210,7 +205,6 @@ class AdminController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', $Offre->getName() . " added successfully ");
-
             return $this->redirectToRoute('consulterforfait');
         } else {
             return $this->render('MainPages/Admin/add_service.html.twig', ['form' => $form->createView()]);

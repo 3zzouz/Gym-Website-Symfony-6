@@ -26,7 +26,11 @@ Profile {{ user.name }}
                         {% set dateFin = subscription.DateFin %}
                         {% set dureeTotale = dateDebut.diff(dateFin).days %}
                         {% set dureeEcoulee = dateDebut.diff(dateActuelle).days %}
+                        {% if dureeTotale == 0  %}
+                        {% set d = 100 %}
+                        {% else %}
                         {% set d = (dureeEcoulee / dureeTotale) * 100 %}
+                        {% endif %}
                         {% include 'Fragments/progressbar.html.twig'
                             with {
                             'd': d,

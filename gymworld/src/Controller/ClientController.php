@@ -130,7 +130,8 @@ class ClientController extends AbstractController
                 return $this->redirectToRoute('app_home');
             } else {
                 $html = $this->renderView('public/pdf.html.twig', ['personne' =>
-                    $personne, 'offre' => $clientRepository->findAppropriate()]);
+                    $personne, 'offre' => $clientRepository->findAppropriate
+                ($this->getUser())]);
                 $pdfContent = $pdfService->generatePdfContent($html);
                 $response = new Response($pdfContent);
                 $response->headers->set('Content-Type', 'application/pdf');

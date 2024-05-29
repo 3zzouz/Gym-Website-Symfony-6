@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\OffreClient;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -25,12 +26,14 @@ class OffreClientRepository extends ServiceEntityRepository
     /**
      * @return OffreClient[] Returns an array of OffreClient objects
      */
-    public function findAppropriate(): array
+    public function findAppropriate(User $user): array
     {
         return $this->createQueryBuilder('o')
             ->andWhere('o.date_debut<=:date')
             ->andWhere('o.date_fin>=:date')
+            ->andWhere('o.client = :client')
             ->setParameter('date', new DateTime())
+            ->setParameter('client', $user)
             ->setMaxResults(1)
             ->getQuery()
             ->getResult();
